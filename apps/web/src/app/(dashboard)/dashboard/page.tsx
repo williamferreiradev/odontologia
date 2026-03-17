@@ -4,7 +4,7 @@ import { RecentLeads } from "@/components/dashboard/RecentLeads"
 import { BaseButton } from "@/components/ui/BaseButton"
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
-import { Lead } from "@/components/shared/PatientDetailsPanel"
+import { Lead } from "@/types"
 
 export default async function DashboardPage() {
     const supabase = createClient()
@@ -52,7 +52,7 @@ export default async function DashboardPage() {
         totalLeads = totalCount || 0
         convertedLeads = convertedCount || 0
         activeLeads = activeCount || 0
-        recentLeadsList = (recentDesc as any) || []
+        recentLeadsList = (recentDesc as Lead[]) || []
     }
 
     // 4. Calcular Taxa de Conversão
