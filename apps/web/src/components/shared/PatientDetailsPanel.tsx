@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { X, Phone, MessageSquare, Save } from "lucide-react"
 import { Lead } from "@/types"
+export type { Lead }
 
 
 interface PatientDetailsPanelProps {
