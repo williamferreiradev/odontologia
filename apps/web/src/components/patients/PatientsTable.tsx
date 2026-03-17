@@ -1,6 +1,7 @@
 "use client"
 
-import { Lead, PatientHistoryItem } from "@/components/shared/PatientDetailsPanel"
+import { PatientHistoryItem } from "@/types"
+import { Phone, Eye, MessageSquare } from "lucide-react"
 
 export interface PatientRecord {
     id: string | number

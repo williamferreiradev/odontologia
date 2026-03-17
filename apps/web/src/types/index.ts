@@ -29,6 +29,6 @@ export interface CalendarEvent {
         status: string
         colorVariant: 'blue' | 'emerald' | 'amber' | 'gray' | 'rose'
         about?: string
-        [key: string]: any
+        [key: string]: unknown
     }
 }

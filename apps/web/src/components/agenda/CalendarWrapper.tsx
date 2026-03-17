@@ -1,15 +1,17 @@
 "use client"
 
 import { Calendar, View } from "react-big-calendar"
+import { CSSProperties } from "react"
 import { CustomEvent } from "./CustomEvent"
+import { CalendarEvent } from "@/types"
 
 interface CalendarWrapperProps {
-    events: any[]
+    events: CalendarEvent[]
     currentDate: Date
     view: View
     onNavigate: (date: Date) => void
     onViewChange: (view: View) => void
-    eventPropGetter?: (event: any) => any
+    eventPropGetter?: (event: CalendarEvent) => { style?: CSSProperties; className?: string }
 }
 
 export function CalendarWrapper({
@@ -20,7 +22,8 @@ export function CalendarWrapper({
     onViewChange,
     eventPropGetter
 }: CalendarWrapperProps) {
-    const localizer = (window as any).calendarLocalizer;
+    const localizer = (window as unknown as { calendarLocalizer: unknown }).calendarLocalizer;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const CalendarComponent = Calendar as any;
 
     if (!localizer) return <div>Carregando calendário...</div>
