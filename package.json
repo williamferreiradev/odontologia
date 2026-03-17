@@ -1,0 +1,12 @@
+{
+  "name": "odontologia-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --prefix apps/web",
+    "install": "npm install --prefix apps/web"
+  }
+}
