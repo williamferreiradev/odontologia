@@ -6,9 +6,11 @@ import { MiniCalendar } from "@/components/agenda/MiniCalendar"
 import { AppointmentModal } from "@/components/agenda/AppointmentModal"
 import { Lead } from "@/components/shared/PatientDetailsPanel"
 
+import { Appointment } from "@/components/agenda/AgendaViewManager"
+
 interface AgendaClientWrapperProps {
     date: string
-    appointments: any[]
+    appointments: Appointment[]
     leads: Lead[]
 }
 

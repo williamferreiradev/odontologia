@@ -1,20 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { X, Phone, MessageSquare, CalendarDays, Activity, Save, Inbox } from "lucide-react"
+import { X, Phone, MessageSquare, Save } from "lucide-react"
+import { Lead } from "@/types"
 
-export interface Lead {
-    id: string | number
-    clinic_id: string
-    name: string
-    phone: string
-    stage: string
-    agent_active: boolean
-    created_at: string
-    source: string | null
-    expected_value: number | null
-    about: string | null
-}
 
 interface PatientDetailsPanelProps {
     isOpen: boolean
@@ -116,7 +105,7 @@ export function PatientDetailsPanel({ isOpen, onClose, patient }: PatientDetails
                                 <h3 className="text-xl font-bold text-gray-900 leading-tight">{patient.name}</h3>
 
                                 <div className="flex items-center gap-2 mt-2 flex-wrap">
-                                    <span className={`px-2.5 py-1 text-xs font-bold rounded-md uppercase tracking-wider border ${getStatusBadge(patient.stage)}`}>
+                                    <span className={`px-2.5 py-1 text-xs font-bold rounded-md uppercase tracking-wider border ${getStatusBadge(patient.stage || 'NOVO')}`}>
                                         {patient.stage || 'NOVO'}
                                     </span>
                                     <span className={`px-2.5 py-1 text-xs font-bold rounded-md uppercase tracking-wider border ${patient.agent_active ? 'bg-clinic-50 text-clinic-700 border-clinic-200' : 'bg-gray-50 text-gray-500 border-gray-200'}`}>

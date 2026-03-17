@@ -2,7 +2,7 @@
 
 import { Users, Calendar, Kanban, Activity, Download, Settings, TrendingUp, TrendingDown } from "lucide-react"
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ElementType> = {
     users: Users,
     calendar: Calendar,
     kanban: Kanban,

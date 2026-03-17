@@ -2,18 +2,31 @@
 
 import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
-import { Calendar as CalendarIcon, Clock, MoreVertical, List } from "lucide-react"
+import { Calendar as CalendarIcon, Clock, List } from "lucide-react"
 import { View } from "react-big-calendar"
 
-import { NativeMiniCalendar } from "@/components/agenda/NativeMiniCalendar"
+
 import { AgendaHeaderAction } from "@/components/agenda/AgendaHeaderAction"
 import { CalendarWrapper } from "@/components/agenda/CalendarWrapper"
 import { Lead } from "@/components/shared/PatientDetailsPanel"
 
+export interface Appointment {
+    id: string | number
+    appointment_date: string
+    start_time: string
+    end_time: string
+    status: string
+    about?: string
+    lead_id?: string | number
+    procedure_name?: string
+    leads?: { name: string }
+    procedures?: { name: string }
+}
+
 interface AgendaViewManagerProps {
     date: string
     titleDate: string
-    appointments: any[]
+    appointments: Appointment[]
     leads: Lead[]
 }
 
@@ -99,8 +112,8 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
                 start: new Date(ty, tm - 1, td, 14, 0),
                 end: new Date(ty, tm - 1, td, 15, 0),
                 allDay: false,
-                colorVariant: 'emerald',
-                resource: { status: 'concluido' }
+                colorVariant: 'emerald' as const,
+                resource: { status: 'concluido' } as Appointment
             },
             {
                 id: 'mock-2',
@@ -108,8 +121,8 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
                 start: new Date(ty, tm - 1, td, 15, 30),
                 end: new Date(ty, tm - 1, td, 16, 30),
                 allDay: false,
-                colorVariant: 'blue',
-                resource: { status: 'agendado' }
+                colorVariant: 'blue' as const,
+                resource: { status: 'agendado' } as Appointment
             },
             {
                 id: 'mock-3',
@@ -117,26 +130,26 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
                 start: new Date(ty, tm - 1, td, 17, 0),
                 end: new Date(ty, tm - 1, td, 18, 0),
                 allDay: false,
-                colorVariant: 'orange',
-                resource: { status: 'falta' }
+                colorVariant: 'orange' as const,
+                resource: { status: 'falta' } as Appointment
             },
             {
                 id: 'mock-4',
                 title: 'TESTE DIA CERTO - Juliana (Retorno)',
-                start: new Date(ty, tm - 1, td + 1, 9, 0),  // Amanhã
-                end: new Date(ty, tm - 1, td + 1, 10, 0), // Amanhã
+                start: new Date(ty, tm - 1, td + 1, 9, 0),
+                end: new Date(ty, tm - 1, td + 1, 10, 0),
                 allDay: false,
-                colorVariant: 'blue',
-                resource: { status: 'agendado' }
+                colorVariant: 'blue' as const,
+                resource: { status: 'agendado' } as Appointment
             },
             {
                 id: 'mock-5',
                 title: 'TESTE DIA CERTO - Fernando (Extração)',
-                start: new Date(ty, tm - 1, td + 1, 10, 30), // Amanhã
-                end: new Date(ty, tm - 1, td + 1, 11, 30), // Amanhã
+                start: new Date(ty, tm - 1, td + 1, 10, 30),
+                end: new Date(ty, tm - 1, td + 1, 11, 30),
                 allDay: false,
-                colorVariant: 'rose',
-                resource: { status: 'cancelado' }
+                colorVariant: 'rose' as const,
+                resource: { status: 'cancelado' } as Appointment
             }
         ];
 
@@ -157,25 +170,7 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
         }).sort((a, b) => a.start.getTime() - b.start.getTime());
     }, [events, date]);
 
-    // Memoize the Calendar Component to prevent Big Calendar from resetting state/losing DOM reference
-    const calendarComponent = useMemo(() => (
-        <CalendarWrapper
-            events={events}
-            currentDate={currentDateParsed}
-            view={calendarView}
-            onNavigate={(d: Date) => {
-                // To avoid timezone shift, manually construct local date string
-                const year = d.getFullYear();
-                const month = String(d.getMonth() + 1).padStart(2, '0');
-                const day = String(d.getDate()).padStart(2, '0');
-                router.push(`/agenda?date=${year}-${month}-${day}`);
-            }}
-            onViewChange={(v: View) => setCalendarView(v)}
-            eventPropGetter={(event) => ({
-                style: getEventStyles(event.resource?.status)
-            })}
-        />
-    ), [events, currentDateParsed, calendarView, router])
+
 
     return (
         <div className="w-full min-h-screen flex flex-col bg-slate-50/50">
@@ -246,7 +241,7 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
                             ) : (
                                 <div className="flex flex-col gap-4">
                                     {listAppointments.map((apt) => {
-                                        const res = apt.resource || {};
+                                        const res = (apt.resource || {}) as Appointment;
                                         // Formatting times
                                         const startTimeStr = apt.start.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
                                         const endTimeStr = apt.end.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -304,6 +299,12 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
                         router.push(`/agenda?date=${year}-${month}-${day}`);
                     }}
                     onViewChange={(v: View) => setCalendarView(v)}
+                    eventPropGetter={(event: object) => {
+                        const evt = event as { resource?: Appointment };
+                        return {
+                            style: getEventStyles(evt.resource?.status || 'agendado')
+                        };
+                    }}
                   />
                 </div>
             )}

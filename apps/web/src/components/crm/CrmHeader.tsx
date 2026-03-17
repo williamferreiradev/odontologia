@@ -1,7 +1,6 @@
 "use client"
 
-import { LayoutGrid, List, Plus } from "lucide-react"
-import { BaseButton } from "@/components/ui/BaseButton"
+import { LayoutGrid, List } from "lucide-react"
 
 interface CrmHeaderProps {
     viewMode: 'kanban' | 'list'

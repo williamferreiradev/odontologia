@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link'
-import { Activity, KeyRound } from 'lucide-react'
+import { KeyRound } from 'lucide-react'
 
 export default function EsqueciSenhaPage() {
     return (

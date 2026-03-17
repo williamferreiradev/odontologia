@@ -1,7 +1,5 @@
 "use client"
 
-import { EventProps } from "react-big-calendar"
-
 export type EventColorVariant = 'purple' | 'orange' | 'emerald' | 'rose' | 'blue'
 
 export interface CalendarEvent {
@@ -9,7 +7,7 @@ export interface CalendarEvent {
     start: Date
     end: Date
     colorVariant?: EventColorVariant
-    resource?: any
+    resource?: unknown
 }
 
 const COLOR_MAP: Record<EventColorVariant, string> = {
@@ -20,7 +18,7 @@ const COLOR_MAP: Record<EventColorVariant, string> = {
     blue: 'bg-blue-50 border-blue-500 text-blue-900',
 }
 
-export function CustomEvent(props: EventProps<CalendarEvent>) {
+export function CustomEvent(props: { event: CalendarEvent }) {
     const variant = props.event.colorVariant || 'blue'
     const colorClasses = COLOR_MAP[variant as EventColorVariant]
 

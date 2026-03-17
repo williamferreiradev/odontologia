@@ -13,6 +13,7 @@ dist
 # misc
 .DS_Store
 *.pem
+*.txt
 
 # env files (IMPORTANT)
 .env

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MoreHorizontal, Eye, MessageSquare, Inbox } from "lucide-react"
+import { Eye, MessageSquare, Inbox } from "lucide-react"
 import { PatientDetailsPanel, Lead } from "@/components/shared/PatientDetailsPanel"
 
 const getStatusBadge = (status: string) => {
@@ -23,11 +23,11 @@ const getStatusBadge = (status: string) => {
     }
 }
 
-export function RecentLeads({ leads = [] }: { leads?: any[] }) {
+export function RecentLeads({ leads = [] }: { leads?: Lead[] }) {
     const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const handleViewDetails = (lead: any) => {
+    const handleViewDetails = (lead: Lead) => {
         setSelectedLead(lead)
         setIsModalOpen(true)
     }

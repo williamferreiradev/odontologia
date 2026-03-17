@@ -1,6 +1,6 @@
 "use client"
 
-import { Phone, Eye, MessageSquare } from "lucide-react"
+import { Lead, PatientHistoryItem } from "@/components/shared/PatientDetailsPanel"
 
 export interface PatientRecord {
     id: string | number
@@ -8,7 +8,7 @@ export interface PatientRecord {
     phone: string
     treatment: string
     status: 'Pendente' | 'Aprovado' | 'Travado'
-    history?: import('@/components/shared/PatientDetailsPanel').PatientHistoryItem[]
+    history?: PatientHistoryItem[]
 }
 
 interface PatientsTableProps {

@@ -1,9 +1,10 @@
-import { Users, Calendar, Kanban, Activity, Download } from "lucide-react"
+import { Download } from "lucide-react"
 import { StatCard } from "@/components/dashboard/StatCard"
 import { RecentLeads } from "@/components/dashboard/RecentLeads"
 import { BaseButton } from "@/components/ui/BaseButton"
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
+import { Lead } from "@/components/shared/PatientDetailsPanel"
 
 export default async function DashboardPage() {
     const supabase = createClient()
@@ -28,7 +29,7 @@ export default async function DashboardPage() {
     let totalLeads = 0
     let convertedLeads = 0
     let activeLeads = 0
-    let recentLeadsList: any[] = []
+    let recentLeadsList: Lead[] = []
 
     if (clinicId) {
         // 3. Buscar métricas do banco de dados vinculados à clínica do usuário
@@ -51,7 +52,7 @@ export default async function DashboardPage() {
         totalLeads = totalCount || 0
         convertedLeads = convertedCount || 0
         activeLeads = activeCount || 0
-        recentLeadsList = recentDesc || []
+        recentLeadsList = (recentDesc as any) || []
     }
 
     // 4. Calcular Taxa de Conversão

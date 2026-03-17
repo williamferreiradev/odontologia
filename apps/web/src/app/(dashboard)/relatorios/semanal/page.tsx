@@ -155,7 +155,7 @@ export default function RelatorioSemanalPage() {
                             <div>
                                 <h4 className="text-sm font-bold text-amber-900">Taxa de Rejeição de Orçamentos de Alto Valor</h4>
                                 <p className="text-sm text-amber-800 mt-1">
-                                    3 tratamentos orçados acima de R$ 15.000 foram recusados alegando "concorrência mais barata". Avalie a estratégia
+                                    3 tratamentos orçados acima de R$ 15.000 foram recusados alegando &quot;concorrência mais barata&quot;. Avalie a estratégia
                                     de ancoragem de valor durante a consulta de avaliação com os dentistas responsáveis.
                                 </p>
                             </div>

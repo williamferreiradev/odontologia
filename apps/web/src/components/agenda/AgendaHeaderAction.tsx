@@ -3,7 +3,9 @@
 import { useState } from "react"
 import { AppointmentModal } from "./AppointmentModal"
 
-export function AgendaHeaderAction({ leads }: { leads: any[] }) {
+import { Lead } from "@/components/shared/PatientDetailsPanel"
+
+export function AgendaHeaderAction({ leads }: { leads: Lead[] }) {
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     return (

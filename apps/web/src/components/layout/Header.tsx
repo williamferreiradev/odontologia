@@ -1,4 +1,4 @@
-import { User } from "lucide-react"
+
 
 export function Header() {
     // Can be made dynamic later based on route

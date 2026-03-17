@@ -12,7 +12,6 @@ import {
 } from "@dnd-kit/core"
 import { arrayMove } from "@dnd-kit/sortable"
 import { KanbanColumn } from "./KanbanColumn"
-import { KanbanCard } from "./KanbanCard"
 import { PatientDetailsPanel, Lead } from "@/components/shared/PatientDetailsPanel"
 
 // Exporting mock data definition here or just storing locally
