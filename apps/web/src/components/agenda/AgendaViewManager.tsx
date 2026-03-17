@@ -5,22 +5,19 @@ import { useRouter } from "next/navigation"
 import { Calendar as CalendarIcon, Clock, List } from "lucide-react"
 import { View } from "react-big-calendar"
 
-
 import { AgendaHeaderAction } from "@/components/agenda/AgendaHeaderAction"
 import { CalendarWrapper } from "@/components/agenda/CalendarWrapper"
-import { Lead } from "@/components/shared/PatientDetailsPanel"
+import { Lead, Appointment, CalendarEvent } from "@/types"
 
-export interface Appointment {
-    id: string | number
-    appointment_date: string
-    start_time: string
-    end_time: string
-    status: string
-    about?: string
-    lead_id?: string | number
-    procedure_name?: string
-    leads?: { name: string }
-    procedures?: { name: string }
+// Maps a DB appointment status to the UI color token required by CalendarEvent.resource
+function appointmentToColorVariant(status: string): CalendarEvent['resource'] extends { colorVariant: infer C } | undefined ? C : never {
+    switch (status?.toLowerCase()) {
+        case 'concluido': return 'emerald'
+        case 'cancelado': return 'rose'
+        case 'falta':     return 'amber'
+        case 'agendado':  return 'blue'
+        default:          return 'gray'
+    }
 }
 
 interface AgendaViewManagerProps {
@@ -94,8 +91,14 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
                 title,
                 start,
                 end,
-                allDay: false,
-                resource: app
+                resource: {
+                    status: app.status,
+                    colorVariant: appointmentToColorVariant(app.status),
+                    about: app.about,
+                    leads: app.leads,
+                    procedures: app.procedures,
+                    lead_id: app.lead_id,
+                }
             }
         })
     }, [appointments, date])
@@ -105,51 +108,41 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
         const todayStr = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD local time
         const [ty, tm, td] = todayStr.split('-').map(Number);
         
-        const mockEvents = [
+        const mockEvents: CalendarEvent[] = [
             {
                 id: 'mock-1',
                 title: 'TESTE DIA CERTO - Amanda (Canal)',
                 start: new Date(ty, tm - 1, td, 14, 0),
                 end: new Date(ty, tm - 1, td, 15, 0),
-                allDay: false,
-                colorVariant: 'emerald' as const,
-                resource: { status: 'concluido' } as Appointment
+                resource: { status: 'concluido', colorVariant: 'emerald' }
             },
             {
                 id: 'mock-2',
                 title: 'TESTE DIA CERTO - Carlos (Avaliação)',
                 start: new Date(ty, tm - 1, td, 15, 30),
                 end: new Date(ty, tm - 1, td, 16, 30),
-                allDay: false,
-                colorVariant: 'blue' as const,
-                resource: { status: 'agendado' } as Appointment
+                resource: { status: 'agendado', colorVariant: 'blue' }
             },
             {
                 id: 'mock-3',
                 title: 'TESTE DIA CERTO - Roberto (Limpeza)',
                 start: new Date(ty, tm - 1, td, 17, 0),
                 end: new Date(ty, tm - 1, td, 18, 0),
-                allDay: false,
-                colorVariant: 'orange' as const,
-                resource: { status: 'falta' } as Appointment
+                resource: { status: 'falta', colorVariant: 'amber' }
             },
             {
                 id: 'mock-4',
                 title: 'TESTE DIA CERTO - Juliana (Retorno)',
                 start: new Date(ty, tm - 1, td + 1, 9, 0),
                 end: new Date(ty, tm - 1, td + 1, 10, 0),
-                allDay: false,
-                colorVariant: 'blue' as const,
-                resource: { status: 'agendado' } as Appointment
+                resource: { status: 'agendado', colorVariant: 'blue' }
             },
             {
                 id: 'mock-5',
                 title: 'TESTE DIA CERTO - Fernando (Extração)',
                 start: new Date(ty, tm - 1, td + 1, 10, 30),
                 end: new Date(ty, tm - 1, td + 1, 11, 30),
-                allDay: false,
-                colorVariant: 'rose' as const,
-                resource: { status: 'cancelado' } as Appointment
+                resource: { status: 'cancelado', colorVariant: 'rose' }
             }
         ];
 
@@ -299,12 +292,9 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
                         router.push(`/agenda?date=${year}-${month}-${day}`);
                     }}
                     onViewChange={(v: View) => setCalendarView(v)}
-                    eventPropGetter={(event: object) => {
-                        const evt = event as { resource?: Appointment };
-                        return {
-                            style: getEventStyles(evt.resource?.status || 'agendado')
-                        };
-                    }}
+                    eventPropGetter={(event: CalendarEvent) => ({
+                        style: getEventStyles(event.resource?.status ?? 'agendado')
+                    })}
                   />
                 </div>
             )}

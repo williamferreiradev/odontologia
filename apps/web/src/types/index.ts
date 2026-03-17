@@ -20,6 +20,19 @@ export interface Lead {
     treatment?: string
 }
 
+export interface Appointment {
+    id: string | number
+    appointment_date: string
+    start_time: string
+    end_time: string
+    status: string
+    about?: string
+    lead_id?: string | number
+    procedure_name?: string
+    leads?: { name: string }
+    procedures?: { name: string }
+}
+
 export interface CalendarEvent {
     id: string | number
     title: string

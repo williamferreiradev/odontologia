@@ -66,7 +66,7 @@ export function RecentLeads({ leads = [] }: { leads?: Lead[] }) {
                                     <td className="px-6 py-4 text-gray-600 capitalize">{lead.source || 'Manual'}</td>
                                     <td className="px-6 py-4 text-gray-600">{lead.treatment || '-'}</td>
                                     <td className="px-6 py-4">
-                                        <span className={`px-2.5 py-1 text-xs font-medium rounded-md border ${getStatusBadge(lead.stage || lead.status)} capitalize`}>
+                                        <span className={`px-2.5 py-1 text-xs font-medium rounded-md border ${getStatusBadge(lead.stage ?? lead.status ?? '')} capitalize`}>
                                             {lead.stage || lead.status}
                                         </span>
                                     </td>
