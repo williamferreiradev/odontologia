@@ -52,25 +52,25 @@ export function Sidebar() {
                     title={isCollapsed ? item.name : undefined}
                 >
                     {isActive && (
-                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-clinic-500 rounded-r-full" />
+                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-clinic-500 rounded-r-full pointer-events-none" />
                     )}
 
-                    <Icon className={`w-5 h-5 shrink-0 ${isActive ? "text-clinic-600" : "text-gray-400 group-hover:text-gray-600"}`} />
+                    <Icon className={`w-5 h-5 shrink-0 pointer-events-none ${isActive ? "text-clinic-600" : "text-gray-400 group-hover:text-gray-600"}`} />
 
                     {!isCollapsed && (
-                        <span className="truncate flex-1">{item.name}</span>
+                        <span className="truncate flex-1 pointer-events-none">{item.name}</span>
                     )}
 
                     {/* Badge */}
                     {!isCollapsed && 'badge' in item && (
-                        <span className="flex items-center justify-center bg-clinic-100 text-clinic-600 text-xs font-semibold px-2 py-0.5 rounded-full">
+                        <span className="flex items-center justify-center bg-clinic-100 text-clinic-600 text-xs font-semibold px-2 py-0.5 rounded-full pointer-events-none">
                             {item.badge}
                         </span>
                     )}
 
                     {/* Tooltip for collapsed state */}
                     {isCollapsed && (
-                        <div className="absolute left-full ml-4 w-max bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                        <div className="absolute left-full ml-4 w-max bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 pointer-events-none">
                             {item.name}
                         </div>
                     )}
