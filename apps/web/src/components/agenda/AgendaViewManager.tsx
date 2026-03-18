@@ -285,10 +285,11 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
                     currentDate={currentDateParsed}
                     view={calendarView}
                     onNavigate={(d: Date) => {
-                        // To avoid timezone shift, manually construct local date string
-                        const year = d.getFullYear();
-                        const month = String(d.getMonth() + 1).padStart(2, '0');
-                        const day = String(d.getDate()).padStart(2, '0');
+                        // Força hora local ao meio-dia para evitar bug de UTC -> local time shift (fuso BRT UTC-3)
+                        const localDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
+                        const year = localDate.getFullYear();
+                        const month = String(localDate.getMonth() + 1).padStart(2, '0');
+                        const day = String(localDate.getDate()).padStart(2, '0');
                         router.push(`/agenda?date=${year}-${month}-${day}`);
                     }}
                     onViewChange={(v: View) => setCalendarView(v)}

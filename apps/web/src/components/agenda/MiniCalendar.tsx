@@ -84,7 +84,7 @@ export function MiniCalendar({ selectedDate }: { selectedDate: string }) {
             <div className="grid grid-cols-7 gap-1">
                 {calendarGrid.map((cell, i) => {
                     const isSelected = cell.date === selectedDate
-                    const isToday = cell.date === new Date().toISOString().split('T')[0]
+                    const isToday = cell.date === new Date().toLocaleDateString('en-CA')
 
                     return (
                         <button
