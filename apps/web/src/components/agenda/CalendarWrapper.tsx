@@ -1,5 +1,5 @@
 "use client"
-
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { Calendar, View } from "react-big-calendar"
 import { CSSProperties } from "react"
 import { CustomEvent } from "./CustomEvent"
@@ -85,6 +85,7 @@ export function CalendarWrapper({
                     event: CustomEvent,
                 }}
                 className="w-full h-full"
+                style={{ height: '100%', minHeight: '650px' }}
                 step={30} // 30 minute chunks
                 timeslots={2} // Subdivide hours into 2 blocks
                 min={new Date(0, 0, 0, 7, 0, 0)} // Starts at 7 AM

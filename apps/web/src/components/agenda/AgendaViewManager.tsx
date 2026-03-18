@@ -276,10 +276,7 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
                 </div>
             ) : (
                 /* Visão de Calendário (Google Calendar Style) */
-                <div 
-                  className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 w-full mt-4" 
-                  style={{ height: '80vh', minHeight: '750px' }}
-                >
+                <div className="flex-1 w-full bg-white rounded-2xl border border-gray-100 shadow-sm p-4 min-h-[700px] overflow-hidden">
                   <CalendarWrapper
                     events={events}
                     currentDate={currentDateParsed}
