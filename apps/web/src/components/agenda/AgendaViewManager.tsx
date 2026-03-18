@@ -61,14 +61,7 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
         }
     }
 
-    // Google Calendar style events
-    const getEventStyles = (status: string) => {
-        const s = status?.toLowerCase();
-        if (s === 'concluido') return { backgroundColor: '#10b981', color: 'white', border: 'none' };
-        if (s === 'cancelado') return { backgroundColor: '#ef4444', color: 'white', border: 'none' };
-        if (s === 'falta') return { backgroundColor: '#f97316', color: 'white', border: 'none' };
-        return { backgroundColor: '#3b82f6', color: 'white', border: 'none' }; // agendado
-    }
+    // Removido getEventStyles (as cores agora são controladas globalmente pelo CustomEvent com Tailwind)
 
     // Parse data to react-big-calendar event format - Memoized to prevent rebuilds
     const mappedEvents = useMemo(() => {
@@ -247,8 +240,8 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
                         router.push(`/agenda?date=${year}-${month}-${day}`);
                     }}
                     onViewChange={(v: View) => setCalendarView(v)}
-                    eventPropGetter={(event: CalendarEvent) => ({
-                        style: getEventStyles(event.resource?.status ?? 'agendado')
+                    eventPropGetter={() => ({
+                        style: { backgroundColor: 'transparent', border: 'none' }
                     })}
                   />
                 </div>
