@@ -7,6 +7,9 @@
   ],
   "scripts": {
     "build": "npm run build --prefix apps/web",
-    "install": "npm install --prefix apps/web"
+    "install:web": "npm install --prefix apps/web"
+  },
+  "devDependencies": {
+    "next": "14.2.35"
   }
 }
