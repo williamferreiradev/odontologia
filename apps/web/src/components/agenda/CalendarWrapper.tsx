@@ -4,6 +4,7 @@ import { Calendar, View } from "react-big-calendar"
 import { CSSProperties } from "react"
 import { CustomEvent } from "./CustomEvent"
 import { CalendarEvent } from "@/types"
+import { calendarLocalizer } from "@/lib/calendar-localizer"
 
 interface CalendarWrapperProps {
     events: CalendarEvent[]
@@ -22,11 +23,8 @@ export function CalendarWrapper({
     onViewChange,
     eventPropGetter
 }: CalendarWrapperProps) {
-    const localizer = (window as unknown as { calendarLocalizer: unknown }).calendarLocalizer;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const CalendarComponent = Calendar as any;
-
-    if (!localizer) return <div>Carregando calendário...</div>
 
     return (
         <div className="
@@ -58,7 +56,7 @@ export function CalendarWrapper({
             [&_.rbc-event-content]:p-0 [&_.rbc-event-content]:h-full
         ">
             <CalendarComponent
-                localizer={localizer}
+                localizer={calendarLocalizer}
                 events={events}
                 startAccessor="start"
                 endAccessor="end"
