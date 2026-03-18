@@ -103,51 +103,8 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
         })
     }, [appointments, date])
 
-    // 3. Mock Data Injection (5 Events for Today and Tomorrow)
-    const events = useMemo(() => {
-        const todayStr = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD local time
-        const [ty, tm, td] = todayStr.split('-').map(Number);
-        
-        const mockEvents: CalendarEvent[] = [
-            {
-                id: 'mock-1',
-                title: 'TESTE DIA CERTO - Amanda (Canal)',
-                start: new Date(ty, tm - 1, td, 14, 0),
-                end: new Date(ty, tm - 1, td, 15, 0),
-                resource: { status: 'concluido', colorVariant: 'emerald' }
-            },
-            {
-                id: 'mock-2',
-                title: 'TESTE DIA CERTO - Carlos (Avaliação)',
-                start: new Date(ty, tm - 1, td, 15, 30),
-                end: new Date(ty, tm - 1, td, 16, 30),
-                resource: { status: 'agendado', colorVariant: 'blue' }
-            },
-            {
-                id: 'mock-3',
-                title: 'TESTE DIA CERTO - Roberto (Limpeza)',
-                start: new Date(ty, tm - 1, td, 17, 0),
-                end: new Date(ty, tm - 1, td, 18, 0),
-                resource: { status: 'falta', colorVariant: 'amber' }
-            },
-            {
-                id: 'mock-4',
-                title: 'TESTE DIA CERTO - Juliana (Retorno)',
-                start: new Date(ty, tm - 1, td + 1, 9, 0),
-                end: new Date(ty, tm - 1, td + 1, 10, 0),
-                resource: { status: 'agendado', colorVariant: 'blue' }
-            },
-            {
-                id: 'mock-5',
-                title: 'TESTE DIA CERTO - Fernando (Extração)',
-                start: new Date(ty, tm - 1, td + 1, 10, 30),
-                end: new Date(ty, tm - 1, td + 1, 11, 30),
-                resource: { status: 'cancelado', colorVariant: 'rose' }
-            }
-        ];
-
-        return [...mappedEvents, ...mockEvents];
-    }, [mappedEvents]);
+    // Usar apenas os eventos vindos do banco de dados
+    const events = mappedEvents;
 
     const currentDateParsed = useMemo(() => {
         // Fix: parse target date as local
@@ -234,7 +191,7 @@ export function AgendaViewManager({ date, titleDate, appointments, leads }: Agen
                             ) : (
                                 <div className="flex flex-col gap-4">
                                     {listAppointments.map((apt) => {
-                                        const res = (apt.resource || {}) as Appointment;
+                                        const res = (apt.resource || {}) as unknown as Appointment;
                                         // Formatting times
                                         const startTimeStr = apt.start.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
                                         const endTimeStr = apt.end.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
